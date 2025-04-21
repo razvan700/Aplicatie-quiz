@@ -60,5 +60,7 @@ public class Question {
     @ElementCollection
     private List<String> correctAnswer;
 
-
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 }
