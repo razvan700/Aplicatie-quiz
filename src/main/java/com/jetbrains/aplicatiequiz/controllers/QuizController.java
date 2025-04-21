@@ -20,11 +20,12 @@ public class QuizController {
     private QuizMapper quizMapper;
 
     @PostMapping("/quiz/new")
-    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizDTO quizDTO){
+    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quizDTO){
         Quiz quiz = quizMapper.toEntity(quizDTO);
-        Quiz createdQuiz = quizService.save(quiz);
+        Quiz createdQuiz = quizService.create(quiz);
         return ResponseEntity.ok(quizMapper.toDTO(createdQuiz));
     }
+
 
 
 }

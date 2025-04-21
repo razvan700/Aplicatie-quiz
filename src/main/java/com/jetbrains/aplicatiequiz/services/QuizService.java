@@ -8,10 +8,11 @@ public interface QuizService {
 
     Quiz create(Quiz quiz);
 
-    Collection<Quiz> list(int limit);
+    Collection<Quiz> list();
 
     Quiz get(Long id);
 
     Quiz update(Quiz server);
+
     Boolean delete(Long id);
 }

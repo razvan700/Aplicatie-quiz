@@ -1,6 +1,4 @@
 package com.jetbrains.aplicatiequiz.services;
 
-public interface QuestionService {
-
-
+public class QuestionServiceImplementation {
 }
