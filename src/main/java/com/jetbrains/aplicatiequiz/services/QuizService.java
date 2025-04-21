@@ -1,11 +1,17 @@
 package com.jetbrains.aplicatiequiz.services;
 
-import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
+import com.jetbrains.aplicatiequiz.models.Quiz;
 
-@Transactional
-@Service
-public class QuizService {
+import java.util.Collection;
 
+public interface QuizService {
 
+    Quiz create(Quiz quiz);
+
+    Collection<Quiz> list(int limit);
+
+    Quiz get(Long id);
+
+    Quiz update(Quiz server);
+    Boolean delete(Long id);
 }

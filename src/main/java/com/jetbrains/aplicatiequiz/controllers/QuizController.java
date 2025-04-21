@@ -3,7 +3,7 @@ package com.jetbrains.aplicatiequiz.controllers;
 import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import com.jetbrains.aplicatiequiz.mappers.QuizMapper;
 import com.jetbrains.aplicatiequiz.models.Quiz;
-import com.jetbrains.aplicatiequiz.services.QuizService;
+import com.jetbrains.aplicatiequiz.services.QuizServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuizController {
 
     @Autowired
-    private QuizService quizService;
+    private QuizServiceImplementation quizService;
 
     @Autowired
     private QuizMapper quizMapper;
