@@ -1,4 +1,4 @@
-package models;
+package com.jetbrains.aplicatiequiz.models;
 
 import jakarta.persistence.*;
 
@@ -6,6 +6,26 @@ import java.util.List;
 
 @Entity
 public class Question {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String text;
+
+    private String type;
+
+    @ElementCollection
+    private List<String> options;
+
+    @ElementCollection
+    private List<String> correctAnswer;
+
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+
+    private Quiz quiz;
+
     public Long getId() {
         return id;
     }
@@ -45,22 +65,4 @@ public class Question {
     public void setCorrectAnswer(List<String> correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String text;
-
-    private String type;
-
-    @ElementCollection
-    private List<String> options;
-
-    @ElementCollection
-    private List<String> correctAnswer;
-
-    @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
 }
