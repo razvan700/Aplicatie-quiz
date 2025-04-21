@@ -1,4 +1,4 @@
-package com.jetbrains.aplicatiequiz.Mappers;
+package com.jetbrains.aplicatiequiz.mappers;
 
 import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import com.jetbrains.aplicatiequiz.models.Quiz;

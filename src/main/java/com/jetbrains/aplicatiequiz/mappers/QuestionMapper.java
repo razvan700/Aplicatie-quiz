@@ -1,7 +1,6 @@
-package com.jetbrains.aplicatiequiz.Mappers;
+package com.jetbrains.aplicatiequiz.mappers;
 
 import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
-import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import com.jetbrains.aplicatiequiz.models.Question;
 import org.springframework.stereotype.Component;
 
