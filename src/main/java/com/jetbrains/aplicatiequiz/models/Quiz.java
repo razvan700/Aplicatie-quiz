@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.models;
 
+import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,21 @@ public class Quiz {
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
+
+    public Quiz() {
+
+    }
+
+    public Quiz(QuizDTO dto) {
+        this.title = dto.getTitle();
+    }
+
+    public QuizDTO toQuizDto() {
+        QuizDTO dto = new QuizDTO();
+        dto.setTitle(this.getTitle());
+        dto.setId(this.getId());
+        return dto;
+    }
 
     public Long getId() {
         return id;

@@ -1,18 +1,18 @@
 package com.jetbrains.aplicatiequiz.services;
 
-import com.jetbrains.aplicatiequiz.models.Quiz;
+import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 
 import java.util.Collection;
 
 public interface QuizService {
 
-    Quiz create(Quiz quiz);
+    QuizDTO create(QuizDTO quiz);
 
-    Collection<Quiz> list();
+    Collection<QuizDTO> list();
 
-    Quiz get(Long id);
+    QuizDTO get(Long id);
 
-    Quiz update(Quiz server);
+    QuizDTO update(QuizDTO server);
 
     Boolean delete(Long id);
 }

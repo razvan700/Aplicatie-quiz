@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.services;
 
+import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
 import com.jetbrains.aplicatiequiz.models.Question;
 import com.jetbrains.aplicatiequiz.repositories.QuestionRepository;
 import com.jetbrains.aplicatiequiz.repositories.QuizRepository;
@@ -27,12 +28,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question createQuestion(Long quizId, Question question) {
-        return null;
+    public QuestionDTO createQuestion(Long quizId, QuestionDTO questionDTO) {
+        logger.info("Saving new question..");
+
+        Question newQuestion = new Question(questionDTO);
+        questionRepository.save(newQuestion);
+        return questionDTO;
     }
 
     @Override
-    public List<Question> getQuestionsByQuiz(Long quizId) {
+    public List<QuestionDTO> getQuestionsByQuiz(Long quizId) {
         logger.info("Fetching quiz by ID: " + quizId);
 //        return questionRepository.findAllByQuizId(quizId)
 //                .orElseThrow(() -> new RuntimeException("Quiz not found with ID: " + quizId));
@@ -40,12 +45,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question getQuestion(Long id) {
+    public QuestionDTO getQuestion(Long id) {
         return null;
     }
 
     @Override
-    public Question updateQuestion(Long id, Question question) {
+    public QuestionDTO updateQuestion(Long id, QuestionDTO question) {
         return null;
     }
 

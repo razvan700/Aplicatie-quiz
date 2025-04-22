@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.models;
 
+import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,8 +24,15 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
-
     private Quiz quiz;
+
+    public Question() {
+    }
+
+    public Question(QuestionDTO dto) {
+        this.setType(dto.getType());
+        this.setText(dto.getText());
+    }
 
     public Long getId() {
         return id;

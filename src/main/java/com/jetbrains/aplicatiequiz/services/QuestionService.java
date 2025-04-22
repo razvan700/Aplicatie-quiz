@@ -1,18 +1,19 @@
 package com.jetbrains.aplicatiequiz.services;
 
+import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
 import com.jetbrains.aplicatiequiz.models.Question;
 
 import java.util.List;
 
 public interface QuestionService {
 
-    Question createQuestion(Long quizId, Question question);
+    QuestionDTO createQuestion(Long quizId, QuestionDTO question);
 
-    List<Question> getQuestionsByQuiz(Long quizId);
+    List<QuestionDTO> getQuestionsByQuiz(Long quizId);
 
-    Question getQuestion(Long id);
+    QuestionDTO getQuestion(Long id);
 
-    Question updateQuestion(Long id, Question question);
+    QuestionDTO updateQuestion(Long id, QuestionDTO question);
 
     boolean deleteQuestion(Long id);
 }
