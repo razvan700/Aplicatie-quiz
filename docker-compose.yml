@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  mysql:
+    container_name: mysql-quiz
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: quiz_db
+    volumes:
+      - mysql-quiz-vol:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+volumes:
+  mysql-quiz-vol:
