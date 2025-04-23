@@ -2,7 +2,6 @@ package com.jetbrains.aplicatiequiz.models;
 
 import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -12,28 +11,37 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String text;
 
+    @Column(nullable = false)
     private String type;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
+    @Column(name = "option")
     private List<String> options;
 
-    @ElementCollection
-    private List<String> correctAnswer;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "correct_answers", joinColumns = @JoinColumn(name = "question_id"))
+    @Column(name = "answer")
+    private List<String> correctAnswers;
 
-    @ManyToOne
-    @JoinColumn(name = "quiz_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
     public Question() {
     }
 
     public Question(QuestionDTO dto) {
-        this.setType(dto.getType());
-        this.setText(dto.getText());
+        this.type = dto.getType();
+        this.text = dto.getText();
+        this.options = dto.getOptions();
+        this.correctAnswers = dto.getCorrectAnswers();
     }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -66,11 +74,19 @@ public class Question {
         this.options = options;
     }
 
-    public List<String> getCorrectAnswer() {
-        return correctAnswer;
+    public List<String> getCorrectAnswers() {
+        return correctAnswers;
     }
 
-    public void setCorrectAnswer(List<String> correctAnswer) {
-        this.correctAnswer = correctAnswer;
+    public void setCorrectAnswers(List<String> correctAnswers) {
+        this.correctAnswers = correctAnswers;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 }

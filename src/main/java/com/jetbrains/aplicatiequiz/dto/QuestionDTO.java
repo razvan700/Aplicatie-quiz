@@ -1,23 +1,39 @@
 package com.jetbrains.aplicatiequiz.dto;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import com.jetbrains.aplicatiequiz.models.Question;
 import java.util.List;
 
 public class QuestionDTO {
-
     private Long id;
-
     private String text;
-
     private String type;
-
     private List<String> options;
+    private List<String> correctAnswers;
+    private Long quizId;
 
-    private List<String> correctAnswer;
+
+    public QuestionDTO() {
+    }
+
+
+    public QuestionDTO(Question question) {
+        this.id = question.getId();
+        this.text = question.getText();
+        this.type = question.getType();
+        this.options = question.getOptions();
+        this.correctAnswers = question.getCorrectAnswers();
+        this.quizId = question.getQuiz() != null ? question.getQuiz().getId() : null;
+    }
+
+
+    public QuestionDTO(String text, String type, List<String> options,
+                       List<String> correctAnswers, Long quizId) {
+        this.text = text;
+        this.type = type;
+        this.options = options;
+        this.correctAnswers = correctAnswers;
+        this.quizId = quizId;
+    }
 
     public Long getId() {
         return id;
@@ -51,11 +67,19 @@ public class QuestionDTO {
         this.options = options;
     }
 
-    public List<String> getCorrectAnswer() {
-        return correctAnswer;
+    public List<String> getCorrectAnswers() {
+        return correctAnswers;
     }
 
-    public void setCorrectAnswer(List<String> correctAnswer) {
-        this.correctAnswer = correctAnswer;
+    public void setCorrectAnswers(List<String> correctAnswers) {
+        this.correctAnswers = correctAnswers;
+    }
+
+    public Long getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
     }
 }

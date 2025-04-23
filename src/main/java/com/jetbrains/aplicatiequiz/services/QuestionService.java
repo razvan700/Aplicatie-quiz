@@ -1,19 +1,19 @@
 package com.jetbrains.aplicatiequiz.services;
 
 import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
-import com.jetbrains.aplicatiequiz.models.Question;
+import com.jetbrains.aplicatiequiz.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
 public interface QuestionService {
 
-    QuestionDTO createQuestion(Long quizId, QuestionDTO question);
+    QuestionDTO createQuestion(Long quizId, QuestionDTO questionDTO) throws ResourceNotFoundException;
 
-    List<QuestionDTO> getQuestionsByQuiz(Long quizId);
+    List<QuestionDTO> getQuestionsByQuizId(Long quizId) throws ResourceNotFoundException;
 
-    QuestionDTO getQuestion(Long id);
+    QuestionDTO getQuestion(Long id) throws ResourceNotFoundException;
 
-    QuestionDTO updateQuestion(Long id, QuestionDTO question);
+    QuestionDTO updateQuestion(Long id, QuestionDTO questionDTO) throws ResourceNotFoundException;
 
-    boolean deleteQuestion(Long id);
+    void deleteQuestion(Long id) throws ResourceNotFoundException;
 }
