@@ -18,4 +18,6 @@ public class AnswerChoice {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice_id", nullable = false)
     private Choice choice;
+
+
 }
