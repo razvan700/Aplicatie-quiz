@@ -2,6 +2,8 @@ package com.jetbrains.aplicatiequiz.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Choice {
 
@@ -9,9 +11,12 @@ public class Choice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String text;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
+    @JoinColumn(name = "question_id")
     private Question question;
 
-    private String text;
+    @OneToMany(mappedBy = "choice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AnswerChoice> answerChoices;
 }

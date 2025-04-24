@@ -15,9 +15,9 @@ public class Quiz {
 
     private String title;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
-    private List<Question> questions;
+    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
+
 
     public Quiz() {
 

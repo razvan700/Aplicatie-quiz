@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
 public class AnswerChoice {
 
     @Id
@@ -12,9 +13,9 @@ public class AnswerChoice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", nullable = false)
-    public Long answerId;
-    
-    @OneToMany(fetch = FetchType.LAZY)
+    public Answer answer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "choice_id", nullable = false)
-    public Long choiceId;
+    private Choice choice;
 }

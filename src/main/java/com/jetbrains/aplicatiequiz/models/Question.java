@@ -2,6 +2,8 @@ package com.jetbrains.aplicatiequiz.models;
 
 import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,9 +29,9 @@ public class Question {
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "choice_id", nullable = false)
-    private List<Choice> choices;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Choice> choices = new ArrayList<>();
+
 
     public Question() {
     }
