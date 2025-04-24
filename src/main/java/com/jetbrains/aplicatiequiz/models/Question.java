@@ -17,19 +17,19 @@ public class Question {
     @Column(nullable = false)
     private String type;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "option")
-    private List<String> options;
+//    @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
+//    @Column(name = "option")
+//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+//    private List<String> options;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "correct_answers", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "answer")
-    private List<String> correctAnswers;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "choice_id", nullable = false)
+    private List<Choice> choices;
 
     public Question() {
     }
@@ -37,8 +37,8 @@ public class Question {
     public Question(QuestionDTO dto) {
         this.type = dto.getType();
         this.text = dto.getText();
-        this.options = dto.getOptions();
-        this.correctAnswers = dto.getCorrectAnswers();
+//        this.options = dto.getOptions();
+
     }
 
     // Getters and Setters
@@ -66,21 +66,17 @@ public class Question {
         this.type = type;
     }
 
-    public List<String> getOptions() {
-        return options;
-    }
+//    public List<String> getOptions() {
+//        return options;
+//    }
 
-    public void setOptions(List<String> options) {
-        this.options = options;
-    }
+//    public void setOptions(List<String> options) {
+//        this.options = options;
+//    }
 
-    public List<String> getCorrectAnswers() {
-        return correctAnswers;
-    }
 
-    public void setCorrectAnswers(List<String> correctAnswers) {
-        this.correctAnswers = correctAnswers;
-    }
+
+
 
     public Quiz getQuiz() {
         return quiz;
