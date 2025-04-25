@@ -1,6 +1,5 @@
 package com.jetbrains.aplicatiequiz.config;
 
-import com.jetbrains.aplicatiequiz.service.UserDetailsServiceImpl;
 import com.jetbrains.aplicatiequiz.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
