@@ -1,7 +1,7 @@
 package com.jetbrains.aplicatiequiz.controllers;
 
 import com.jetbrains.aplicatiequiz.dto.QuizDTO;
-import com.jetbrains.aplicatiequiz.services.QuizServiceImplementation;
+import com.jetbrains.aplicatiequiz.services.QuizServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,10 @@ import java.util.List;
 @RestController("/")
 public class QuizController {
 
-    private QuizServiceImplementation quizService;
+    private QuizServiceImpl quizService;
 
     @Autowired
-    public QuizController(QuizServiceImplementation quizService) {
+    public QuizController(QuizServiceImpl quizService) {
         this.quizService = quizService;
     }
 

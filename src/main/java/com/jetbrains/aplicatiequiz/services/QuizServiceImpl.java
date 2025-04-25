@@ -6,7 +6,6 @@ import com.jetbrains.aplicatiequiz.repositories.QuizRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -14,13 +13,13 @@ import java.util.stream.Collectors;
 
 @Transactional
 @Service
-public class QuizServiceImplementation implements QuizService{
+public class QuizServiceImpl implements QuizService{
 
-    private final Logger logger = Logger.getLogger(QuizServiceImplementation.class.getName());
+    private final Logger logger = Logger.getLogger(QuizServiceImpl.class.getName());
 
     private final QuizRepository quizRepository;
 
-    public QuizServiceImplementation(QuizRepository quizRepository) {
+    public QuizServiceImpl(QuizRepository quizRepository) {
         this.quizRepository = quizRepository;
     }
 
