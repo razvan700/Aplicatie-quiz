@@ -1,12 +1,12 @@
-package com.jetbrains.aplicatiequiz.service;
+package com.jetbrains.aplicatiequiz.services;
 
 import com.jetbrains.aplicatiequiz.models.User;
 import com.jetbrains.aplicatiequiz.repositories.UserRepository;
-import com.jetbrains.aplicatiequiz.repository.UserRepository;
 import com.jetbrains.aplicatiequiz.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -15,10 +15,11 @@ import java.util.Collections;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,5 +32,15 @@ public class UserServiceImpl implements UserService {
                 user.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName()))
         );
+    }
+
+    @Override
+    public User registerUser(User user) {
+        // ✅ Hash the password before saving
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+
+        // Save the user with the hashed password
+        return userRepository.save(user);
     }
 }

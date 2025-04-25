@@ -1,6 +1,7 @@
 package com.jetbrains.aplicatiequiz.config;
 
 import com.jetbrains.aplicatiequiz.service.UserDetailsServiceImpl;
+import com.jetbrains.aplicatiequiz.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,9 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserServiceImpl userDetailsService;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfig(UserServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
