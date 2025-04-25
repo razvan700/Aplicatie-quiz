@@ -3,6 +3,7 @@ package com.jetbrains.aplicatiequiz.controllers;
 import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
 import com.jetbrains.aplicatiequiz.services.QuestionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +18,19 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/quiz/{quizId}/questions")
     public ResponseEntity<List<QuestionDTO>> getQuestionsByQuizId(@PathVariable Long quizId) {
         return ResponseEntity.ok(questionService.getQuestionsByQuizId(quizId));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<QuestionDTO> getQuestionById(@PathVariable Long id) {
         return ResponseEntity.ok(questionService.getQuestion(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/new")
     public ResponseEntity<QuestionDTO> createQuestion(@PathVariable Long quizId,
                                                       @RequestBody QuestionDTO questionDTO) {

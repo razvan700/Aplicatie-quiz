@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.controllers;
 
+import com.jetbrains.aplicatiequiz.enums.Role;
 import com.jetbrains.aplicatiequiz.models.User;
 import com.jetbrains.aplicatiequiz.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
+        user.setRole(Role.USER);
         User created = userService.registerUser(user);
         return ResponseEntity.ok(created);
     }
