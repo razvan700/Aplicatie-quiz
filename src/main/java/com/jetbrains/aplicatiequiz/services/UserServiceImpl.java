@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(User user) {
-        // ✅ Hash the password before saving
+
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
 
-        // Save the user with the hashed password
+
         return userRepository.save(user);
     }
 }

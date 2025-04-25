@@ -37,8 +37,6 @@ public class QuestionServiceImpl implements QuestionService {
         Question newQuestion = new Question();
         newQuestion.setText(questionDTO.getText());
         newQuestion.setType(questionDTO.getType());
-        newQuestion.setOptions(questionDTO.getOptions());
-        newQuestion.setCorrectAnswers(questionDTO.getCorrectAnswers());
         newQuestion.setQuiz(quiz);
 
         Question savedQuestion = questionRepository.save(newQuestion);
@@ -69,8 +67,6 @@ public class QuestionServiceImpl implements QuestionService {
 
         existingQuestion.setText(questionDTO.getText());
         existingQuestion.setType(questionDTO.getType());
-        existingQuestion.setOptions(questionDTO.getOptions());
-        existingQuestion.setCorrectAnswers(questionDTO.getCorrectAnswers());
 
         if (questionDTO.getQuizId() != null &&
                 !questionDTO.getQuizId().equals(existingQuestion.getQuiz().getId())) {

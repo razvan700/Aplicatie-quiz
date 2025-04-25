@@ -1,39 +1,38 @@
 package com.jetbrains.aplicatiequiz.dto;
 
 import com.jetbrains.aplicatiequiz.models.Question;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDTO {
+
     private Long id;
     private String text;
     private String type;
-    private List<String> options;
-    private List<String> correctAnswers;
     private Long quizId;
 
+    private List<String> choiceTexts;
+
+
+    private List<ChoiceDTO> choices;
 
     public QuestionDTO() {
     }
-
 
     public QuestionDTO(Question question) {
         this.id = question.getId();
         this.text = question.getText();
         this.type = question.getType();
-        this.options = question.getOptions();
-        this.correctAnswers = question.getCorrectAnswers();
         this.quizId = question.getQuiz() != null ? question.getQuiz().getId() : null;
+
+        // Map Choice entities to DTOs
+        if (question.getChoices() != null) {
+            this.choices = new ArrayList<>();
+            question.getChoices().forEach(choice -> this.choices.add(new ChoiceDTO(choice)));
+        }
     }
 
-
-    public QuestionDTO(String text, String type, List<String> options,
-                       List<String> correctAnswers, Long quizId) {
-        this.text = text;
-        this.type = type;
-        this.options = options;
-        this.correctAnswers = correctAnswers;
-        this.quizId = quizId;
-    }
 
     public Long getId() {
         return id;
@@ -59,27 +58,27 @@ public class QuestionDTO {
         this.type = type;
     }
 
-    public List<String> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<String> options) {
-        this.options = options;
-    }
-
-    public List<String> getCorrectAnswers() {
-        return correctAnswers;
-    }
-
-    public void setCorrectAnswers(List<String> correctAnswers) {
-        this.correctAnswers = correctAnswers;
-    }
-
     public Long getQuizId() {
         return quizId;
     }
 
     public void setQuizId(Long quizId) {
         this.quizId = quizId;
+    }
+
+    public List<String> getChoiceTexts() {
+        return choiceTexts;
+    }
+
+    public void setChoiceTexts(List<String> choiceTexts) {
+        this.choiceTexts = choiceTexts;
+    }
+
+    public List<ChoiceDTO> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<ChoiceDTO> choices) {
+        this.choices = choices;
     }
 }

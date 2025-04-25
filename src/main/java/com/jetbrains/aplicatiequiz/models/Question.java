@@ -19,12 +19,6 @@ public class Question {
     @Column(nullable = false)
     private String type;
 
-//    @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
-//    @Column(name = "option")
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-//    private List<String> options;
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
@@ -32,20 +26,19 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Choice> choices = new ArrayList<>();
 
-    @OneToMany(mappedBy = "attempt", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     public Question() {
     }
 
     public Question(QuestionDTO dto) {
-        this.type = dto.getType();
         this.text = dto.getText();
-//        this.options = dto.getOptions();
-
+        this.type = dto.getType();
     }
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -70,23 +63,27 @@ public class Question {
         this.type = type;
     }
 
-//    public List<String> getOptions() {
-//        return options;
-//    }
-
-//    public void setOptions(List<String> options) {
-//        this.options = options;
-//    }
-
-
-
-
-
     public Quiz getQuiz() {
         return quiz;
     }
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public List<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }
