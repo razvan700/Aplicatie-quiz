@@ -1,6 +1,8 @@
 package com.jetbrains.aplicatiequiz.dto;
 
+import com.jetbrains.aplicatiequiz.models.Answer;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnswerDTO {
     private Long questionId;
@@ -29,5 +31,13 @@ public class AnswerDTO {
 
     public void setSelectedChoiceIds(List<Long> selectedChoiceIds) {
         this.selectedChoiceIds = selectedChoiceIds;
+    }
+
+    public AnswerDTO(Answer answer) {
+        this.questionId = answer.getQuestion().getId();
+        this.textResponse = answer.getTextResponse();
+        this.selectedChoiceIds = answer.getAnswerChoices().stream()
+                .map(ac -> ac.getChoice().getId())
+                .collect(Collectors.toList());
     }
 }

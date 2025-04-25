@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface AttemptService {
 
-    Attempt submitAttempt(AttemptDTO attemptDTO, Long userId, Long quizId);
+    Attempt submitAttempt(AttemptDTO attemptDTO);
 
-    List<Attempt> getAttemptsByUserId(Long userId);
+    List<AttemptDTO> getAttemptsByUserId(Long userId);
 
-    List<Attempt> getAttemptsByQuizId(Long quizId);
+    List<AttemptDTO> getAttemptsByQuizId(Long quizId);
 
     Attempt getAttemptById(Long attemptId);
 }

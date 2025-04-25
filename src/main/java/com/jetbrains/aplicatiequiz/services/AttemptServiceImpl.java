@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-    @Service
+@Service
     @Transactional
     public class AttemptServiceImpl implements AttemptService {
 
@@ -38,60 +39,65 @@ import java.util.List;
             this.answerRepository = answerRepository;
         }
 
-        @Override
-        public Attempt submitAttempt(AttemptDTO attemptDTO, Long userId, Long quizId) {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    @Override
+    public Attempt submitAttempt(AttemptDTO attemptDTO) {
+        User user = userRepository.findById(attemptDTO.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-            Quiz quiz = quizRepository.findById(quizId)
-                    .orElseThrow(() -> new EntityNotFoundException("Quiz not found"));
+        Quiz quiz = quizRepository.findById(attemptDTO.getQuizId())
+                .orElseThrow(() -> new EntityNotFoundException("Quiz not found"));
 
-            Attempt attempt = new Attempt();
-            attempt.setUser(user);
-            attempt.setQuiz(quiz);
-            attempt.setTimestamp(LocalDateTime.now());
+        Attempt attempt = new Attempt();
+        attempt.setUser(user);
+        attempt.setQuiz(quiz);
+        attempt.setTimestamp(LocalDateTime.now());
 
-            List<Answer> answers = new ArrayList<>();
+        List<Answer> answers = new ArrayList<>();
 
-            for (AnswerDTO answerDTO : attemptDTO.getAnswers()) {
-                Question question = questionRepository.findById(answerDTO.getQuestionId())
-                        .orElseThrow(() -> new EntityNotFoundException("Question not found"));
+        for (AnswerDTO answerDTO : attemptDTO.getAnswers()) {
+            Question question = questionRepository.findById(answerDTO.getQuestionId())
+                    .orElseThrow(() -> new EntityNotFoundException("Question not found"));
 
-                Answer answer = new Answer();
-                answer.setAttempt(attempt);
-                answer.setQuestion(question);
-                answer.setTextResponse(answerDTO.getTextResponse());
+            Answer answer = new Answer();
+            answer.setAttempt(attempt);
+            answer.setQuestion(question);
+            answer.setTextResponse(answerDTO.getTextResponse());
 
-                if (answerDTO.getSelectedChoiceIds() != null) {
-                    List<AnswerChoice> answerChoices = new ArrayList<>();
-                    for (Long choiceId : answerDTO.getSelectedChoiceIds()) {
-                        Choice choice = choiceRepository.findById(choiceId)
-                                .orElseThrow(() -> new RuntimeException("Choice not found"));
+            if (answerDTO.getSelectedChoiceIds() != null) {
+                List<AnswerChoice> answerChoices = new ArrayList<>();
+                for (Long choiceId : answerDTO.getSelectedChoiceIds()) {
+                    Choice choice = choiceRepository.findById(choiceId)
+                            .orElseThrow(() -> new RuntimeException("Choice not found"));
 
-                        AnswerChoice answerChoice = new AnswerChoice();
-                        answerChoice.setAnswer(answer);
-                        answerChoice.setChoice(choice);
-                        answerChoices.add(answerChoice);
-                    }
-                    answer.setAnswerChoices(answerChoices);
+                    AnswerChoice answerChoice = new AnswerChoice();
+                    answerChoice.setAnswer(answer);
+                    answerChoice.setChoice(choice);
+                    answerChoices.add(answerChoice);
                 }
-
-                answers.add(answer);
+                answer.setAnswerChoices(answerChoices);
             }
 
-            attempt.setAnswers(answers);
+            answers.add(answer);
+        }
 
-            return attemptRepository.save(attempt);
+        attempt.setAnswers(answers);
+        return attemptRepository.save(attempt);
+    }
+
+        @Override
+        public List<AttemptDTO> getAttemptsByUserId(Long userId) {
+            List<Attempt> attempts = attemptRepository.findByUserId(userId);
+            return attempts.stream()
+                    .map(AttemptDTO::new)
+                    .toList();
         }
 
         @Override
-        public List<Attempt> getAttemptsByUserId(Long userId) {
-            return attemptRepository.findByUserId(userId);
-        }
-
-        @Override
-        public List<Attempt> getAttemptsByQuizId(Long quizId) {
-            return attemptRepository.findByQuizId(quizId);
+        public List<AttemptDTO> getAttemptsByQuizId(Long quizId) {
+            return attemptRepository.findByQuizId(quizId)
+                    .stream()
+                    .map(AttemptDTO::new)
+                    .collect(Collectors.toList());
         }
 
         @Override
