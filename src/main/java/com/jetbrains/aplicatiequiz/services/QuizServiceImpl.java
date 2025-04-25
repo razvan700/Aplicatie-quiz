@@ -4,6 +4,7 @@ import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import com.jetbrains.aplicatiequiz.models.Quiz;
 import com.jetbrains.aplicatiequiz.repositories.QuizRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +20,24 @@ public class QuizServiceImpl implements QuizService{
 
     private final QuizRepository quizRepository;
 
+    @Value("${app.base-url:http://localhost:8080}")
+    private String baseUrl;
+
     public QuizServiceImpl(QuizRepository quizRepository) {
         this.quizRepository = quizRepository;
     }
 
     public QuizDTO create(QuizDTO dto) {
-        logger.info("Creating new quiz:" + dto.getTitle());
-        return quizRepository.save(new Quiz(dto)).toQuizDto();
+        logger.info("Creating new quiz: " + dto.getTitle());
+
+        Quiz quiz = quizRepository.save(new Quiz(dto));
+
+        QuizDTO resultDto = quiz.toQuizDto();
+
+        String shareableLink = baseUrl + "/quiz/" + quiz.getId();
+        resultDto.setShareableLink(shareableLink);
+
+        return resultDto;
     }
 
     @Override

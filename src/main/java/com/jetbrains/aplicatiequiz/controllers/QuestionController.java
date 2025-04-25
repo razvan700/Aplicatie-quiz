@@ -27,4 +27,11 @@ public class QuestionController {
     public ResponseEntity<QuestionDTO> getQuestionById(@PathVariable Long id) {
         return ResponseEntity.ok(questionService.getQuestion(id));
     }
+
+    @PostMapping("/new")
+    public ResponseEntity<QuestionDTO> createQuestion(@PathVariable Long quizId,
+                                                      @RequestBody QuestionDTO questionDTO) {
+        QuestionDTO created = questionService.createQuestion(quizId, questionDTO);
+        return ResponseEntity.ok(created);
+    }
 }
