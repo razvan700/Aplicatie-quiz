@@ -1,8 +1,9 @@
 package com.jetbrains.aplicatiequiz.models;
 
+import com.jetbrains.aplicatiequiz.enums.Role;
 import jakarta.persistence.*;
 
-import javax.management.relation.Role;
+
 import java.util.List;
 
 @Entity

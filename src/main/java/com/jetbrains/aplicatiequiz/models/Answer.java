@@ -26,4 +26,43 @@ public class Answer {
 
     private String textResponse;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Attempt getAttempt() {
+        return attempt;
+    }
+
+    public void setAttempt(Attempt attempt) {
+        this.attempt = attempt;
+    }
+
+    public List<AnswerChoice> getAnswerChoices() {
+        return answerChoices;
+    }
+
+    public void setAnswerChoices(List<AnswerChoice> answerChoices) {
+        this.answerChoices = answerChoices;
+    }
+
+    public String getTextResponse() {
+        return textResponse;
+    }
+
+    public void setTextResponse(String textResponse) {
+        this.textResponse = textResponse;
+    }
 }
