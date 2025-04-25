@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Quiz {
@@ -18,19 +19,23 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
+    @Column(unique = true, nullable = false)
+    private String shareableLink;
 
     public Quiz() {
-
+        this.shareableLink = UUID.randomUUID().toString();
     }
 
     public Quiz(QuizDTO dto) {
         this.title = dto.getTitle();
+        this.shareableLink = UUID.randomUUID().toString();
     }
 
     public QuizDTO toQuizDto() {
         QuizDTO dto = new QuizDTO();
-        dto.setTitle(this.getTitle());
-        dto.setId(this.getId());
+        dto.setId(this.id);
+        dto.setTitle(this.title);
+        dto.setShareableLink(this.shareableLink);
         return dto;
     }
 
@@ -57,5 +62,12 @@ public class Quiz {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
-}
 
+    public String getShareableLink() {
+        return shareableLink;
+    }
+
+    public void setShareableLink(String shareableLink) {
+        this.shareableLink = shareableLink;
+    }
+}

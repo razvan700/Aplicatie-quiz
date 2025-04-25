@@ -13,6 +13,8 @@ public class QuizDTO {
 
     private String title;
 
+    private String shareableLink;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +39,5 @@ public class QuizDTO {
         this.shareableLink = shareableLink;
     }
 
-    private String shareableLink;
+
 }

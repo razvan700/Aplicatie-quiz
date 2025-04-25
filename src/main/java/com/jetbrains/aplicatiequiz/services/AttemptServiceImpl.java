@@ -40,17 +40,20 @@ import java.util.stream.Collectors;
         }
 
     @Override
-    public Attempt submitAttempt(AttemptDTO attemptDTO) {
-        User user = userRepository.findById(attemptDTO.getUserId())
+    public Attempt submitAttempt(AttemptDTO attemptDTO, String username, Long quizId) {
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        Quiz quiz = quizRepository.findById(attemptDTO.getQuizId())
+        Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new EntityNotFoundException("Quiz not found"));
 
         Attempt attempt = new Attempt();
         attempt.setUser(user);
         attempt.setQuiz(quiz);
         attempt.setTimestamp(LocalDateTime.now());
+
+
+        attempt.setShareableLink(quiz.getShareableLink());
 
         List<Answer> answers = new ArrayList<>();
 
@@ -81,10 +84,13 @@ import java.util.stream.Collectors;
         }
 
         attempt.setAnswers(answers);
+
         return attemptRepository.save(attempt);
     }
 
-        @Override
+
+
+    @Override
         public List<AttemptDTO> getAttemptsByUserId(Long userId) {
             List<Attempt> attempts = attemptRepository.findByUserId(userId);
             return attempts.stream()

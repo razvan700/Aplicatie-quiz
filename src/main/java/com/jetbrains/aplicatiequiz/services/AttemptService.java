@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AttemptService {
 
-    Attempt submitAttempt(AttemptDTO attemptDTO);
+    Attempt submitAttempt(AttemptDTO attemptDTO, String username, Long quizId);
 
     List<AttemptDTO> getAttemptsByUserId(Long userId);
 

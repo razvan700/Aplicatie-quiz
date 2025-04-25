@@ -32,6 +32,16 @@ public class Attempt {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
+    private String shareableLink;
+
+    public String getShareableLink() {
+        return shareableLink;
+    }
+
+    public void setShareableLink(String shareableLink) {
+        this.shareableLink = shareableLink;
+    }
+
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }

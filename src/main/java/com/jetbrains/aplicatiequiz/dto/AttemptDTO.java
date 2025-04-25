@@ -8,15 +8,26 @@ import java.util.stream.Collectors;
 public class AttemptDTO {
 
     private Long quizId;
-    private Long userId; // ✅ Added field
+    private Long userId;
     private List<AnswerDTO> answers;
+
+    private String shareableLink;
+
+    public String getShareableLink() {
+        return shareableLink;
+    }
+
+    public void setShareableLink(String shareableLink) {
+        this.shareableLink = shareableLink;
+    }
 
     public AttemptDTO() {
     }
 
+
+
     public AttemptDTO(Attempt attempt) {
-        this.quizId = attempt.getQuiz().getId();
-        this.userId = attempt.getUser().getId();
+        this.shareableLink = attempt.getShareableLink();
         this.answers = attempt.getAnswers().stream()
                 .map(AnswerDTO::new)
                 .collect(Collectors.toList());

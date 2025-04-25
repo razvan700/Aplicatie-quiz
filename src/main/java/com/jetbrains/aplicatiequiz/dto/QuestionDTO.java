@@ -26,7 +26,6 @@ public class QuestionDTO {
         this.type = question.getType();
         this.quizId = question.getQuiz() != null ? question.getQuiz().getId() : null;
 
-        // Map Choice entities to DTOs
         if (question.getChoices() != null) {
             this.choices = new ArrayList<>();
             question.getChoices().forEach(choice -> this.choices.add(new ChoiceDTO(choice)));

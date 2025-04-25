@@ -4,6 +4,8 @@ import com.jetbrains.aplicatiequiz.dto.AttemptDTO;
 import com.jetbrains.aplicatiequiz.services.AttemptService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +21,12 @@ public class AttemptController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping("/submit")
-    public ResponseEntity<AttemptDTO> submitAttempt(@RequestBody AttemptDTO attemptDTO) {
-        AttemptDTO savedAttempt = new AttemptDTO(attemptService.submitAttempt(attemptDTO));
+    @PostMapping("/submit/{quizId}")
+    public ResponseEntity<AttemptDTO> submitAttempt(@AuthenticationPrincipal UserDetails userDetails,
+                                                    @PathVariable Long quizId,
+                                                    @RequestBody AttemptDTO attemptDTO) {
+        String username = userDetails.getUsername();
+        AttemptDTO savedAttempt = new AttemptDTO(attemptService.submitAttempt(attemptDTO, username, quizId));
         return ResponseEntity.ok(savedAttempt);
     }
 
