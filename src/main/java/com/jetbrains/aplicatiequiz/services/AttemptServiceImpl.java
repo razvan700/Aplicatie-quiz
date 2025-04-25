@@ -5,6 +5,7 @@ import com.jetbrains.aplicatiequiz.dto.AttemptDTO;
 import com.jetbrains.aplicatiequiz.models.*;
 import com.jetbrains.aplicatiequiz.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
     @Service
+    @Transactional
     public class AttemptServiceImpl implements AttemptService {
 
         private final AttemptRepository attemptRepository;

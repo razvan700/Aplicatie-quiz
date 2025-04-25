@@ -3,6 +3,7 @@ package com.jetbrains.aplicatiequiz.services;
 import com.jetbrains.aplicatiequiz.models.User;
 import com.jetbrains.aplicatiequiz.repositories.UserRepository;
 import com.jetbrains.aplicatiequiz.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;

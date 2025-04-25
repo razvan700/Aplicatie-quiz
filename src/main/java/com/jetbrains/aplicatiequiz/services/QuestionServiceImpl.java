@@ -6,6 +6,7 @@ import com.jetbrains.aplicatiequiz.models.Question;
 import com.jetbrains.aplicatiequiz.models.Quiz;
 import com.jetbrains.aplicatiequiz.repositories.QuestionRepository;
 import com.jetbrains.aplicatiequiz.repositories.QuizRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class QuestionServiceImpl implements QuestionService {
         Question savedQuestion = questionRepository.save(newQuestion);
         return new QuestionDTO(savedQuestion);
     }
+
 
     @Override
     public List<QuestionDTO> getQuestionsByQuizId(Long quizId) {

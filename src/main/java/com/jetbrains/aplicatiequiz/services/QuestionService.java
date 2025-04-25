@@ -5,6 +5,7 @@ import com.jetbrains.aplicatiequiz.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
+
 public interface QuestionService {
 
     QuestionDTO createQuestion(Long quizId, QuestionDTO questionDTO) throws ResourceNotFoundException;
@@ -16,4 +17,5 @@ public interface QuestionService {
     QuestionDTO updateQuestion(Long id, QuestionDTO questionDTO) throws ResourceNotFoundException;
 
     void deleteQuestion(Long id) throws ResourceNotFoundException;
+
 }
