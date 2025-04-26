@@ -18,10 +18,15 @@ import java.util.stream.Collectors;
     public class AttemptServiceImpl implements AttemptService {
 
         private final AttemptRepository attemptRepository;
+
         private final UserRepository userRepository;
+
         private final QuizRepository quizRepository;
+
         private final QuestionRepository questionRepository;
+
         private final ChoiceRepository choiceRepository;
+
         private final AnswerRepository answerRepository;
 
         public AttemptServiceImpl(
