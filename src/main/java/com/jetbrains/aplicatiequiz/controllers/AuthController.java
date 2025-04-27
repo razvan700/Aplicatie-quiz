@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.controllers;
 
+import com.jetbrains.aplicatiequiz.dto.UserDTO;
 import com.jetbrains.aplicatiequiz.enums.Role;
 import com.jetbrains.aplicatiequiz.models.User;
 import com.jetbrains.aplicatiequiz.services.UserService;
@@ -20,12 +21,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<UserDTO> register(@RequestBody UserDTO user) {
         if (user.getRole() == null) {
             user.setRole(Role.USER);
         }
-        User created = userService.registerUser(user);
-        return ResponseEntity.ok(created);
+        User created = new User(user);
+        userService.registerUser(created);
+        return ResponseEntity.ok(user);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")

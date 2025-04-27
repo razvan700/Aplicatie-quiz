@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.services;
 
+import com.jetbrains.aplicatiequiz.dto.UserDTO;
 import com.jetbrains.aplicatiequiz.models.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

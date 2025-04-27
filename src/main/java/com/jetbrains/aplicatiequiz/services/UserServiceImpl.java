@@ -1,8 +1,8 @@
 package com.jetbrains.aplicatiequiz.services;
 
+
 import com.jetbrains.aplicatiequiz.models.User;
 import com.jetbrains.aplicatiequiz.repositories.UserRepository;
-import com.jetbrains.aplicatiequiz.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

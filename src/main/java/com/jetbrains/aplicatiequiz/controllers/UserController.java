@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.controllers;
 
+import com.jetbrains.aplicatiequiz.dto.UserDTO;
 import com.jetbrains.aplicatiequiz.models.User;
 import com.jetbrains.aplicatiequiz.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,9 +22,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
+        UserDTO dto = new UserDTO(user);
         User createdUser = userService.registerUser(user);
-        return ResponseEntity.ok(createdUser);
+        return ResponseEntity.ok(dto);
     }
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")

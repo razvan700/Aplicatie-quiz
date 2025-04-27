@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.models;
 
+import com.jetbrains.aplicatiequiz.dto.UserDTO;
 import com.jetbrains.aplicatiequiz.enums.Role;
 import jakarta.persistence.*;
 
@@ -23,8 +24,17 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attempt> attempts;
+
+    public User(UserDTO dto){
+        this.attempts = dto.getAttempts();
+        this.id = dto.getId();
+        this.role = dto.getRole();
+        this.username = dto.getUsername();
+        this.password = dto.getPassword();
+    }
 
     public Long getId() {
         return id;
