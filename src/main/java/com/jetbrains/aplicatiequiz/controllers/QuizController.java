@@ -2,6 +2,7 @@ package com.jetbrains.aplicatiequiz.controllers;
 
 import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import com.jetbrains.aplicatiequiz.services.QuizServiceImpl;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ public class QuizController {
         this.quizService = quizService;
     }
 
+    @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/quiz/new")
     public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quizDTO){
@@ -31,12 +33,15 @@ public class QuizController {
         return ResponseEntity.ok(quizService.list());
     }
 
+    @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/quiz/{id}")
     public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
         return ResponseEntity.ok(quizService.get(id));
     }
 
+
+    @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/quiz/update/{id}")
     public ResponseEntity<QuizDTO> updateQuiz(@PathVariable Long id, @RequestBody QuizDTO quizDTO) {
@@ -44,6 +49,7 @@ public class QuizController {
         return ResponseEntity.ok(quizService.update(quizDTO));
     }
 
+    @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/quiz/delete/{id}")
     public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
