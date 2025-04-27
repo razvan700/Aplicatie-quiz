@@ -1,8 +1,9 @@
 package com.jetbrains.aplicatiequiz.services;
 
 import com.jetbrains.aplicatiequiz.dto.QuizDTO;
+import com.jetbrains.aplicatiequiz.models.Question;
 import com.jetbrains.aplicatiequiz.models.Quiz;
-import com.jetbrains.aplicatiequiz.repositories.QuizRepository;
+import com.jetbrains.aplicatiequiz.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,28 @@ public class QuizServiceImpl implements QuizService{
 
     private final QuizRepository quizRepository;
 
+    private final AnswerChoiceRepository answerChoiceRepository;
+
+    private final AnswerRepository answerRepository;
+
+    private final ChoiceRepository choiceRepository;
+
+    private final QuestionRepository questionRepository;
+
     @Value("${app.base-url:http://localhost:8080}")
     private String baseUrl;
 
-    public QuizServiceImpl(QuizRepository quizRepository) {
+    public QuizServiceImpl(QuizRepository quizRepository,
+                           AnswerChoiceRepository answerChoiceRepository,
+                           AnswerRepository answerRepository,
+                           ChoiceRepository choiceRepository,
+                           QuestionRepository questionRepository
+                            ) {
         this.quizRepository = quizRepository;
+        this.answerChoiceRepository = answerChoiceRepository;
+        this.answerRepository = answerRepository;
+        this.choiceRepository = choiceRepository;
+        this.questionRepository = questionRepository;
     }
 
     public QuizDTO create(QuizDTO dto) {
@@ -66,6 +84,8 @@ public class QuizServiceImpl implements QuizService{
         logger.info("Deleting quiz with ID: " + id);
         Optional<Quiz> existingQuiz = quizRepository.findById(id);
         if (existingQuiz.isPresent()) {
+
+
             quizRepository.deleteById(id);
             return true;
         }

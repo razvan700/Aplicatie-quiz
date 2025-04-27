@@ -6,13 +6,11 @@ import com.jetbrains.aplicatiequiz.models.Question;
 import com.jetbrains.aplicatiequiz.models.Quiz;
 import com.jetbrains.aplicatiequiz.repositories.QuestionRepository;
 import com.jetbrains.aplicatiequiz.repositories.QuizRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public List<QuestionDTO> getQuestionsByQuizId(Long quizId) {
+    public List<Question> getQuestionsByQuizId(Long quizId) {
         logger.info("Fetching questions for quiz ID: " + quizId);
 
         if (!quizRepository.existsById(quizId)) {
@@ -57,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionDTO getQuestion(Long id) {
+    public Question getQuestion(Long id) {
         return questionRepository.findQuestionDTOById(id);
     }
 

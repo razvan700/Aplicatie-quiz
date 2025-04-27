@@ -19,10 +19,11 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        user.setRole(Role.USER);
+        if (user.getRole() == null) {
+            user.setRole(Role.USER);
+        }
         User created = userService.registerUser(user);
         return ResponseEntity.ok(created);
     }

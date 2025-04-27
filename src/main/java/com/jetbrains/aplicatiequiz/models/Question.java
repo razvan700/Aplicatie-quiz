@@ -37,7 +37,6 @@ public class Question {
         this.type = dto.getType();
     }
 
-    // Getters and Setters
 
     public Long getId() {
         return id;

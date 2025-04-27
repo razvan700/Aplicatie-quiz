@@ -12,12 +12,11 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question,Long> {
 
-    @Query("SELECT q FROM Question q WHERE q.quiz.id = :quizId")
-    List<QuestionDTO> findQuestionsByQuizId(@Param("quizId") Long quizId);
+    List<Question> findQuestionsByQuizId(@Param("quizId") Long quizId);
 
-    @Query("SELECT new com.jetbrains.aplicatiequiz.dto.QuestionDTO(q) FROM Question q WHERE q.id = :id")
-    QuestionDTO findQuestionDTOById(@Param("id") Long id);
+    Question findQuestionDTOById(@Param("id") Long id);
 
+    void deleteAllByQuizId(@Param("quizId") Long quizId);
 
     boolean existsByQuizId(Long quizId);
 }
