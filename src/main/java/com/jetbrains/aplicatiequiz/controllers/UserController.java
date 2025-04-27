@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,14 @@ public class UserController {
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> result = new ArrayList<>();
+        List<User> obtained = userService.getAllUsers();
+        for(User user: obtained){
+            UserDTO current = new UserDTO(user);
+            result.add(current);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
