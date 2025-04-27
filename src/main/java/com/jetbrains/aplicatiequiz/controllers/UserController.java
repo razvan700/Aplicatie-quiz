@@ -37,8 +37,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        UserDTO result = new UserDTO(user);
+        return ResponseEntity.ok(result);
     }
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
