@@ -29,14 +29,8 @@ public class Quiz {
     public Quiz(QuizDTO dto) {
         this.title = dto.getTitle();
         this.shareableLink = UUID.randomUUID().toString();
-    }
-
-    public QuizDTO toQuizDto() {
-        QuizDTO dto = new QuizDTO();
-        dto.setId(this.id);
-        dto.setTitle(this.title);
-        dto.setShareableLink(this.shareableLink);
-        return dto;
+        this.id = dto.getId();
+        this.questions = dto.getQuestions();
     }
 
     public Long getId() {

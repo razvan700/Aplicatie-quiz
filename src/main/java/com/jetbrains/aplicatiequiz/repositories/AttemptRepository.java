@@ -15,5 +15,4 @@ public interface AttemptRepository extends JpaRepository<Attempt, Long> {
 
     List<Attempt> findByQuizId(Long quizId);
 
-    void deleteAllByQuizId(@Param("quizId") Long quizId);
 }

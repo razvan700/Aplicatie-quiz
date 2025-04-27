@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnswerChoiceRepository extends JpaRepository<AnswerChoice, Long> {
-
-    void deleteAllByQuizId(@Param("quizId") Long quizId);
 }

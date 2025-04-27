@@ -1,7 +1,5 @@
 package com.jetbrains.aplicatiequiz.services;
 
-import com.jetbrains.aplicatiequiz.dto.QuizDTO;
-import com.jetbrains.aplicatiequiz.models.Question;
 import com.jetbrains.aplicatiequiz.models.Quiz;
 import com.jetbrains.aplicatiequiz.repositories.*;
 import jakarta.transaction.Transactional;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -45,38 +42,30 @@ public class QuizServiceImpl implements QuizService{
         this.questionRepository = questionRepository;
     }
 
-    public QuizDTO create(QuizDTO dto) {
-        logger.info("Creating new quiz: " + dto.getTitle());
 
-        Quiz quiz = quizRepository.save(new Quiz(dto));
-
-        QuizDTO resultDto = quiz.toQuizDto();
-
+    public Quiz create(Quiz quiz) {
+        logger.info("Creating new quiz: " + quiz.getTitle());
+        quizRepository.save(quiz);
         String shareableLink = baseUrl + "/quiz/" + quiz.getId();
-        resultDto.setShareableLink(shareableLink);
-
-        return resultDto;
+        return quiz;
     }
 
     @Override
-    public List<QuizDTO> list() {
+    public List<Quiz> list() {
         logger.info("Listing all quizzes");
-        return quizRepository.findAll().stream()
-                .map(Quiz::toQuizDto).collect(Collectors.toList());
+        return quizRepository.findAll();
     }
 
     @Override
-    public QuizDTO get(Long id) {
+    public Quiz get(Long id) {
         logger.info("Fetching quiz by ID: " + id);
-        return quizRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Quiz not found with ID: " + id))
-                .toQuizDto();
+        return quizRepository.findQuizById(id);
     }
 
     @Override
-    public QuizDTO update(QuizDTO dto) {
-        logger.info("Updating quiz with ID: " + dto.getId());
-        return quizRepository.save(new Quiz(dto)).toQuizDto();
+    public Quiz update(Quiz quiz) {
+        logger.info("Updating quiz with ID: " + quiz.getId());
+        return quizRepository.save(quiz);
     }
 
     @Override

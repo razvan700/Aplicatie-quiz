@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.models;
 
+import com.jetbrains.aplicatiequiz.dto.ChoiceDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,6 +13,9 @@ public class Choice {
     private Long id;
 
     private String text;
+
+    public Choice() {
+    }
 
     public Long getId() {
         return id;
@@ -51,4 +55,9 @@ public class Choice {
 
     @OneToMany(mappedBy = "choice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AnswerChoice> answerChoices;
+
+    public Choice(ChoiceDTO dto){
+         this.id = dto.getId();
+         this.text = dto.getText();
+    }
 }

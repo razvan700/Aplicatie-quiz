@@ -29,7 +29,6 @@ public class User {
     private List<Attempt> attempts;
 
     public User(UserDTO dto){
-        this.attempts = dto.getAttempts();
         this.id = dto.getId();
         this.role = dto.getRole();
         this.username = dto.getUsername();

@@ -15,7 +15,6 @@ public class UserDTO {
 
     private Role Role;
 
-    private List<Attempt> attempts;
 
 
 
@@ -51,17 +50,9 @@ public class UserDTO {
         Role = role;
     }
 
-    public List<Attempt> getAttempts() {
-        return attempts;
-    }
 
-    public void setAttempts(List<Attempt> attempts) {
-        this.attempts = attempts;
-    }
 
     public UserDTO(User user){
-
-        this.attempts = user.getAttempts();
 
         this.id = user.getId();
 
