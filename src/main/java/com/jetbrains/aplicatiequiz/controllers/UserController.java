@@ -23,10 +23,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
-        UserDTO dto = new UserDTO(user);
-        User createdUser = userService.registerUser(user);
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user) {
+        User entity = new User(user);
+        userService.registerUser(entity);
+        return ResponseEntity.ok(user);
     }
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
