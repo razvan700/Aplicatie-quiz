@@ -44,7 +44,7 @@ public class QuestionController {
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/new")
+    @PostMapping("/new/{quizId}")
     public ResponseEntity<QuestionDTO> createQuestion(@PathVariable Long quizId,
                                                       @RequestBody QuestionDTO questionDTO) {
         Question currentQuestion = new Question(questionDTO);

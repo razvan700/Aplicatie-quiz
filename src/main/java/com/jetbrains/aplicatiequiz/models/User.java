@@ -35,6 +35,9 @@ public class User {
         this.password = dto.getPassword();
     }
 
+    public User() {
+    }
+
     public Long getId() {
         return id;
     }
