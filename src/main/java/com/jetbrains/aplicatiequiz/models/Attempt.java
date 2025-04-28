@@ -25,6 +25,7 @@ public class Attempt {
     @OneToMany(mappedBy = "attempt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Answer> answers;
 
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }

@@ -10,7 +10,6 @@ public class QuestionDTO {
     private Long id;
     private String text;
     private String type;
-    private Long quizId;
 
     private List<String> choiceTexts;
 
@@ -24,7 +23,6 @@ public class QuestionDTO {
         this.id = question.getId();
         this.text = question.getText();
         this.type = question.getType();
-        this.quizId = question.getQuiz() != null ? question.getQuiz().getId() : null;
 
         if (question.getChoices() != null) {
             this.choices = new ArrayList<>();
@@ -55,14 +53,6 @@ public class QuestionDTO {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Long getQuizId() {
-        return quizId;
-    }
-
-    public void setQuizId(Long quizId) {
-        this.quizId = quizId;
     }
 
     public List<String> getChoiceTexts() {

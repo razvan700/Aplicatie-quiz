@@ -14,7 +14,7 @@ public interface QuestionRepository extends JpaRepository<Question,Long> {
 
     List<Question> findQuestionsByQuizId(@Param("quizId") Long quizId);
 
-    Question findQuestionDTOById(@Param("id") Long id);
+    Question findQuestionById(@Param("id") Long id);
 
     void deleteAllByQuizId(@Param("quizId") Long quizId);
 

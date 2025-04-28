@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
     public User registerUser(User user) {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
+        userRepository.save(user);
         return userRepository.save(user);
     }
 

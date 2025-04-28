@@ -47,7 +47,8 @@ public class QuestionController {
     @PostMapping("/new")
     public ResponseEntity<QuestionDTO> createQuestion(@PathVariable Long quizId,
                                                       @RequestBody QuestionDTO questionDTO) {
-        QuestionDTO created = questionService.createQuestion(quizId, questionDTO);
-        return ResponseEntity.ok(created);
+        Question currentQuestion = new Question(questionDTO);
+        questionService.createQuestion(quizId, currentQuestion);
+        return ResponseEntity.ok(questionDTO);
     }
 }

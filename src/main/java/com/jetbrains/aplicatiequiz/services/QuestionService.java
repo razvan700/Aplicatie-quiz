@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface QuestionService {
 
-    QuestionDTO createQuestion(Long quizId, QuestionDTO questionDTO) throws ResourceNotFoundException;
+    Question createQuestion(Long quizId, Question question) throws ResourceNotFoundException;
 
     List<Question> getQuestionsByQuizId(Long quizId) throws ResourceNotFoundException;
 
     Question getQuestion(Long id) throws ResourceNotFoundException;
 
-    QuestionDTO updateQuestion(Long id, QuestionDTO questionDTO) throws ResourceNotFoundException;
+    Question updateQuestion(Long id, Question question) throws ResourceNotFoundException;
 
     void deleteQuestion(Long id) throws ResourceNotFoundException;
 

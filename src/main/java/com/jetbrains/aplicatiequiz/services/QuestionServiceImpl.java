@@ -27,19 +27,19 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionDTO createQuestion(Long quizId, QuestionDTO questionDTO) {
+    public Question createQuestion(Long quizId, Question question) {
         logger.info("Creating new question for quiz ID: " + quizId);
 
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new ResourceNotFoundException("Quiz not found with ID: " + quizId));
 
         Question newQuestion = new Question();
-        newQuestion.setText(questionDTO.getText());
-        newQuestion.setType(questionDTO.getType());
+        newQuestion.setText(question.getText());
+        newQuestion.setType(question.getType());
         newQuestion.setQuiz(quiz);
 
-        Question savedQuestion = questionRepository.save(newQuestion);
-        return new QuestionDTO(savedQuestion);
+
+        return newQuestion;
     }
 
 
@@ -56,27 +56,17 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getQuestion(Long id) {
-        return questionRepository.findQuestionDTOById(id);
+        return questionRepository.findQuestionById(id);
     }
 
 
     @Override
-    public QuestionDTO updateQuestion(Long id, QuestionDTO questionDTO) {
-        Question existingQuestion = questionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Question not found with ID: " + id));
-
-        existingQuestion.setText(questionDTO.getText());
-        existingQuestion.setType(questionDTO.getType());
-
-        if (questionDTO.getQuizId() != null &&
-                !questionDTO.getQuizId().equals(existingQuestion.getQuiz().getId())) {
-            Quiz newQuiz = quizRepository.findById(questionDTO.getQuizId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Quiz not found with ID: " + questionDTO.getQuizId()));
-            existingQuestion.setQuiz(newQuiz);
-        }
-
-        Question updatedQuestion = questionRepository.save(existingQuestion);
-        return new QuestionDTO(updatedQuestion);
+    public Question updateQuestion(Long id, Question question) {
+        Question existingQuestion = questionRepository.findQuestionById(id);
+        existingQuestion.setText(question.getText());
+        existingQuestion.setType(question.getType());
+        questionRepository.save(existingQuestion);
+        return existingQuestion;
     }
 
     @Override

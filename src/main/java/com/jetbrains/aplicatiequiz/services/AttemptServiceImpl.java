@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
         }
 
     @Override
-    public Attempt submitAttempt(AttemptDTO attemptDTO, String username, Long quizId) {
+    public Attempt submitAttempt(Attempt attempt1, String username, Long quizId) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
@@ -62,18 +62,18 @@ import java.util.stream.Collectors;
 
         List<Answer> answers = new ArrayList<>();
 
-        for (AnswerDTO answerDTO : attemptDTO.getAnswers()) {
-            Question question = questionRepository.findById(answerDTO.getQuestionId())
+        for (Answer answer : attempt.getAnswers()) {
+            Question question = questionRepository.findById(answer.getQuestionId())
                     .orElseThrow(() -> new EntityNotFoundException("Question not found"));
 
-            Answer answer = new Answer();
+            Answer answer1 = new Answer();
             answer.setAttempt(attempt);
             answer.setQuestion(question);
-            answer.setTextResponse(answerDTO.getTextResponse());
+            answer.setTextResponse(answer.getTextResponse());
 
-            if (answerDTO.getSelectedChoiceIds() != null) {
+            if (answer.getSelectedChoiceIds() != null) {
                 List<AnswerChoice> answerChoices = new ArrayList<>();
-                for (Long choiceId : answerDTO.getSelectedChoiceIds()) {
+                for (Long choiceId : answer.getSelectedChoiceIds()) {
                     Choice choice = choiceRepository.findById(choiceId)
                             .orElseThrow(() -> new RuntimeException("Choice not found"));
 
@@ -96,18 +96,18 @@ import java.util.stream.Collectors;
 
 
     @Override
-        public List<AttemptDTO> getAttemptsByUserId(Long userId) {
+        public List<Attempt> getAttemptsByUserId(Long userId) {
             List<Attempt> attempts = attemptRepository.findByUserId(userId);
             return attempts.stream()
-                    .map(AttemptDTO::new)
+                    .map(Attempt::new)
                     .toList();
         }
 
         @Override
-        public List<AttemptDTO> getAttemptsByQuizId(Long quizId) {
+        public List<Attempt> getAttemptsByQuizId(Long quizId) {
             return attemptRepository.findByQuizId(quizId)
                     .stream()
-                    .map(AttemptDTO::new)
+                    .map(Attempt::new)
                     .collect(Collectors.toList());
         }
 

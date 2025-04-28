@@ -65,4 +65,12 @@ public class Answer {
     public void setTextResponse(String textResponse) {
         this.textResponse = textResponse;
     }
+
+    public Iterable<? extends Long> getSelectedChoiceIds() {
+        return this.getSelectedChoiceIds();
+    }
+
+    public Long getQuestionId() {
+        return this.getQuestionId();
+    }
 }

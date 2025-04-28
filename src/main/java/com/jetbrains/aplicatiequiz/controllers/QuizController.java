@@ -26,9 +26,10 @@ public class QuizController {
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/quiz/new")
-    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizDTO quizDTO){
+    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quizDTO){
         Quiz quiz = new Quiz(quizDTO);
-        return ResponseEntity.ok(quizService.create(quiz));
+        quizService.create(quiz);
+        return ResponseEntity.ok(quizDTO);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
