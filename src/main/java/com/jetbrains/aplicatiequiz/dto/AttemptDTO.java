@@ -2,58 +2,34 @@ package com.jetbrains.aplicatiequiz.dto;
 
 import com.jetbrains.aplicatiequiz.models.Attempt;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 public class AttemptDTO {
 
-    private Long quizId;
-    private Long userId;
-    private List<AnswerDTO> answers;
-
+    private Long id;
+    private LocalDateTime attemptDate;
+    private LocalDateTime timestamp;
     private String shareableLink;
 
-    public String getShareableLink() {
-        return shareableLink;
-    }
-
-    public void setShareableLink(String shareableLink) {
-        this.shareableLink = shareableLink;
-    }
-
-    public AttemptDTO() {
-    }
-
+    public AttemptDTO() {}
 
 
     public AttemptDTO(Attempt attempt) {
+        this.id = attempt.getId();
+        this.attemptDate = attempt.getAttemptDate();
+        this.timestamp = attempt.getTimestamp();
         this.shareableLink = attempt.getShareableLink();
-        this.answers = attempt.getAnswers().stream()
-                .map(AnswerDTO::new)
-                .collect(Collectors.toList());
     }
 
-    public Long getQuizId() {
-        return quizId;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setQuizId(Long quizId) {
-        this.quizId = quizId;
-    }
+    public LocalDateTime getAttemptDate() { return attemptDate; }
+    public void setAttemptDate(LocalDateTime attemptDate) { this.attemptDate = attemptDate; }
 
-    public Long getUserId() {
-        return userId;
-    }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public List<AnswerDTO> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<AnswerDTO> answers) {
-        this.answers = answers;
-    }
+    public String getShareableLink() { return shareableLink; }
+    public void setShareableLink(String shareableLink) { this.shareableLink = shareableLink; }
 }

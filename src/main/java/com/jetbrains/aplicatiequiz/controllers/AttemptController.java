@@ -1,6 +1,7 @@
 package com.jetbrains.aplicatiequiz.controllers;
 
 import com.jetbrains.aplicatiequiz.dto.AttemptDTO;
+import com.jetbrains.aplicatiequiz.models.Attempt;
 import com.jetbrains.aplicatiequiz.services.AttemptService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/attempt")
@@ -28,21 +30,33 @@ public class AttemptController {
                                                     @PathVariable Long quizId,
                                                     @RequestBody AttemptDTO attemptDTO) {
         String username = userDetails.getUsername();
-        AttemptDTO savedAttempt = new AttemptDTO(attemptService.submitAttempt(attemptDTO, username, quizId));
-        return ResponseEntity.ok(savedAttempt);
+        Attempt attempt = new Attempt();
+        attempt.setAttemptDate(attemptDTO.getAttemptDate());
+        attempt.setTimestamp(attemptDTO.getTimestamp());
+        attempt.setShareableLink(attemptDTO.getShareableLink());
+
+        Attempt savedAttempt = attemptService.submitAttempt(attempt, username, quizId);
+
+        return ResponseEntity.ok(new AttemptDTO(savedAttempt));
     }
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<AttemptDTO>> getAttemptsByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(attemptService.getAttemptsByUserId(userId));
+        List<AttemptDTO> attempts = attemptService.getAttemptsByUserId(userId).stream()
+                .map(AttemptDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(attempts);
     }
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/quiz/{quizId}")
     public ResponseEntity<List<AttemptDTO>> getAttemptsByQuiz(@PathVariable Long quizId) {
-        return ResponseEntity.ok(attemptService.getAttemptsByQuizId(quizId));
+        List<AttemptDTO> attempts = attemptService.getAttemptsByQuizId(quizId).stream()
+                .map(AttemptDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(attempts);
     }
 }
