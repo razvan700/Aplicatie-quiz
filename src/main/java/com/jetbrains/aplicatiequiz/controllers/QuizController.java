@@ -26,23 +26,26 @@ public class QuizController {
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/quiz/new")
-    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quizDTO){
+    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quizDTO) {
         Quiz quiz = new Quiz(quizDTO);
-        quizService.create(quiz);
-        return ResponseEntity.ok(quizDTO);
+        Quiz savedQuiz = quizService.create(quiz);
+        QuizDTO responseDTO = new QuizDTO(savedQuiz);
+        return ResponseEntity.ok(responseDTO);
     }
+
+
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/quiz/list")
-    public ResponseEntity<List<QuizDTO>> createQuiz(){
-        List<Quiz> intermediary = quizService.list();
-        List<QuizDTO> result = new ArrayList<>();
-        for(Quiz q : intermediary){
-            QuizDTO dto = new QuizDTO(q);
-            result.add(dto);
+    public ResponseEntity<List<QuizDTO>> listQuizzes() {
+        List<Quiz> quizzes = quizService.list();
+        List<QuizDTO> quizDTOs = new ArrayList<>();
+        for (Quiz quiz : quizzes) {
+            quizDTOs.add(new QuizDTO(quiz));
         }
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(quizDTOs);
     }
+
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")

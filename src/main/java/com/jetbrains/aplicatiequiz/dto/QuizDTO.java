@@ -11,6 +11,10 @@ public class QuizDTO {
         return id;
     }
 
+    public QuizDTO(){
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

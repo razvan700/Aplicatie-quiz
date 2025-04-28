@@ -43,11 +43,13 @@ public class QuizServiceImpl implements QuizService{
     }
 
 
+    @Override
     public Quiz create(Quiz quiz) {
         logger.info("Creating new quiz: " + quiz.getTitle());
-        quizRepository.save(quiz);
+        quiz = quizRepository.save(quiz);
         String shareableLink = baseUrl + "/quiz/" + quiz.getId();
-        return quiz;
+        quiz.setShareableLink(shareableLink);
+        return quizRepository.save(quiz);
     }
 
     @Override
