@@ -30,7 +30,6 @@ public class Quiz {
         this.title = dto.getTitle();
         this.shareableLink = UUID.randomUUID().toString();
         this.id = dto.getId();
-        this.questions = dto.getQuestions();
     }
 
     public Long getId() {
