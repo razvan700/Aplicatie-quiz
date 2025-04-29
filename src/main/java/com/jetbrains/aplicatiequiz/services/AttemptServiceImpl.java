@@ -71,3 +71,4 @@ public class AttemptServiceImpl implements AttemptService {
                 .orElseThrow(() -> new EntityNotFoundException("Attempt not found"));
     }
 }
+//validated the sharable link
