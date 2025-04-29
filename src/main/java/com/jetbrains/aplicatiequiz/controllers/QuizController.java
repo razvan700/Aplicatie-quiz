@@ -9,14 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-@RestController("/")
+@RestController
+@RequestMapping("/")
 public class QuizController {
 
-    private QuizServiceImpl quizService;
+    private final QuizServiceImpl quizService;
 
     @Autowired
     public QuizController(QuizServiceImpl quizService) {
@@ -29,41 +29,34 @@ public class QuizController {
     public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quizDTO) {
         Quiz quiz = new Quiz(quizDTO);
         Quiz savedQuiz = quizService.create(quiz);
-        QuizDTO responseDTO = new QuizDTO(savedQuiz);
-        return ResponseEntity.ok(responseDTO);
+        return ResponseEntity.ok(new QuizDTO(savedQuiz));
     }
 
-
-
+    @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/quiz/list")
     public ResponseEntity<List<QuizDTO>> listQuizzes() {
-        List<Quiz> quizzes = quizService.list();
-        List<QuizDTO> quizDTOs = new ArrayList<>();
-        for (Quiz quiz : quizzes) {
-            quizDTOs.add(new QuizDTO(quiz));
-        }
+        List<QuizDTO> quizDTOs = quizService.list().stream()
+                .map(QuizDTO::new)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(quizDTOs);
     }
-
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/quiz/{id}")
     public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
-        QuizDTO result = new QuizDTO(quizService.get(id));
-        return ResponseEntity.ok(result);
+        Quiz quiz = quizService.get(id);
+        return ResponseEntity.ok(new QuizDTO(quiz));
     }
-
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/quiz/update/{id}")
+    @PutMapping("/quiz/{id}")
     public ResponseEntity<QuizDTO> updateQuiz(@PathVariable Long id, @RequestBody QuizDTO quizDTO) {
         quizDTO.setId(id);
-        Quiz quiz = new Quiz(quizDTO);
-        quizService.update(quiz);
-        return ResponseEntity.ok(quizDTO);
+        Quiz updatedQuiz = quizService.updateWithNested(id, quizDTO);
+        return ResponseEntity.ok(new QuizDTO(updatedQuiz));
     }
 
     @SecurityRequirement(name = "JavaInUseSecurityScheme")

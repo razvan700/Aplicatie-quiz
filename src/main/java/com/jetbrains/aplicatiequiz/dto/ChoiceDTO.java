@@ -1,9 +1,6 @@
 package com.jetbrains.aplicatiequiz.dto;
 
-import com.jetbrains.aplicatiequiz.models.AnswerChoice;
 import com.jetbrains.aplicatiequiz.models.Choice;
-
-import java.util.List;
 
 public class ChoiceDTO {
 

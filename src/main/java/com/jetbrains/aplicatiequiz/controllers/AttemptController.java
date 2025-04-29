@@ -1,7 +1,7 @@
 package com.jetbrains.aplicatiequiz.controllers;
 
-import com.jetbrains.aplicatiequiz.dto.AttemptDTO;
-import com.jetbrains.aplicatiequiz.models.Attempt;
+import com.jetbrains.aplicatiequiz.dto.*;
+import com.jetbrains.aplicatiequiz.models.*;
 import com.jetbrains.aplicatiequiz.services.AttemptService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,24 @@ public class AttemptController {
                                                     @PathVariable Long quizId,
                                                     @RequestBody AttemptDTO attemptDTO) {
         String username = userDetails.getUsername();
+
         Attempt attempt = new Attempt();
-        attempt.setAttemptDate(attemptDTO.getAttemptDate());
-        attempt.setTimestamp(attemptDTO.getTimestamp());
-        attempt.setShareableLink(attemptDTO.getShareableLink());
+        attempt.setAttemptDate(LocalDateTime.now());
+        attempt.setTimestamp(LocalDateTime.now());
+        attempt.setShareableLink("");
+
+
+        attempt.setAnswers(
+                attemptDTO.getAnswers().stream()
+                        .map(answerDTO -> {
+                            Answer answer = new Answer();
+                            answer.setQuestionId(answerDTO.getQuestionId());
+                            answer.setTextResponse(answerDTO.getTextResponse());
+                            answer.setSelectedChoiceIds(answerDTO.getSelectedChoiceIds());
+                            return answer;
+                        })
+                        .toList()
+        );
 
         Attempt savedAttempt = attemptService.submitAttempt(attempt, username, quizId);
 

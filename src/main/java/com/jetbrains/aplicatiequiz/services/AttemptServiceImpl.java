@@ -46,6 +46,7 @@ public class AttemptServiceImpl implements AttemptService {
         attempt.setUser(user);
         attempt.setQuiz(quiz);
         attempt.setTimestamp(LocalDateTime.now());
+        attempt.setAttemptDate(LocalDateTime.now());
         attempt.setShareableLink(quiz.getShareableLink());
 
         if (attempt.getAnswers() != null) {

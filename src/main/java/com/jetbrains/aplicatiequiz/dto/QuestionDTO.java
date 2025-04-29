@@ -2,18 +2,14 @@ package com.jetbrains.aplicatiequiz.dto;
 
 import com.jetbrains.aplicatiequiz.models.Question;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class QuestionDTO {
 
     private Long id;
     private String text;
     private String type;
-
-    private List<String> choiceTexts;
-
-
     private List<ChoiceDTO> choices;
 
     public QuestionDTO() {
@@ -23,13 +19,12 @@ public class QuestionDTO {
         this.id = question.getId();
         this.text = question.getText();
         this.type = question.getType();
-
         if (question.getChoices() != null) {
-            this.choices = new ArrayList<>();
-            question.getChoices().forEach(choice -> this.choices.add(new ChoiceDTO(choice)));
+            this.choices = question.getChoices().stream()
+                    .map(ChoiceDTO::new)
+                    .collect(Collectors.toList());
         }
     }
-
 
     public Long getId() {
         return id;
@@ -53,14 +48,6 @@ public class QuestionDTO {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public List<String> getChoiceTexts() {
-        return choiceTexts;
-    }
-
-    public void setChoiceTexts(List<String> choiceTexts) {
-        this.choiceTexts = choiceTexts;
     }
 
     public List<ChoiceDTO> getChoices() {

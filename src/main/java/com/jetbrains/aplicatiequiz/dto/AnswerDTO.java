@@ -1,13 +1,35 @@
 package com.jetbrains.aplicatiequiz.dto;
 
 import com.jetbrains.aplicatiequiz.models.Answer;
+import com.jetbrains.aplicatiequiz.models.AnswerChoice;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AnswerDTO {
     private Long questionId;
     private String textResponse;
     private List<Long> selectedChoiceIds;
+
+    public AnswerDTO() {
+    }
+
+    public AnswerDTO(Answer answer) {
+        if (answer.getQuestion() != null) {
+            this.questionId = answer.getQuestion().getId();
+        }
+
+        this.textResponse = answer.getTextResponse();
+
+        this.selectedChoiceIds = new ArrayList<>();
+        if (answer.getAnswerChoices() != null) {
+            for (AnswerChoice ac : answer.getAnswerChoices()) {
+                if (ac.getChoice() != null) {
+                    this.selectedChoiceIds.add(ac.getChoice().getId());
+                }
+            }
+        }
+    }
 
     public Long getQuestionId() {
         return questionId;
@@ -31,13 +53,5 @@ public class AnswerDTO {
 
     public void setSelectedChoiceIds(List<Long> selectedChoiceIds) {
         this.selectedChoiceIds = selectedChoiceIds;
-    }
-
-    public AnswerDTO(Answer answer) {
-        this.questionId = answer.getQuestion().getId();
-        this.textResponse = answer.getTextResponse();
-        this.selectedChoiceIds = answer.getAnswerChoices().stream()
-                .map(ac -> ac.getChoice().getId())
-                .collect(Collectors.toList());
     }
 }

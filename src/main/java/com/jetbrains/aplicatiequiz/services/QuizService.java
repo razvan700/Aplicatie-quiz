@@ -3,9 +3,7 @@ package com.jetbrains.aplicatiequiz.services;
 import com.jetbrains.aplicatiequiz.dto.QuizDTO;
 import com.jetbrains.aplicatiequiz.models.Quiz;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public interface QuizService {
 
@@ -15,7 +13,9 @@ public interface QuizService {
 
     Quiz get(Long id);
 
-    Quiz update(Quiz server);
+    Quiz update(Quiz quiz);
 
     Boolean delete(Long id);
+
+    Quiz updateWithNested(Long id, QuizDTO quizDTO);
 }

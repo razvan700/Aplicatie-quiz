@@ -16,7 +16,6 @@ public class Answer {
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id", nullable = false)
     private Attempt attempt;
@@ -66,11 +65,36 @@ public class Answer {
         this.textResponse = textResponse;
     }
 
-    public Iterable<? extends Long> getSelectedChoiceIds() {
-        return this.getSelectedChoiceIds();
+    public Iterable<Long> getSelectedChoiceIds() {
+        List<Long> ids = new ArrayList<>();
+        for (AnswerChoice ac : answerChoices) {
+            if (ac.getChoice() != null && ac.getChoice().getId() != null) {
+                ids.add(ac.getChoice().getId());
+            }
+        }
+        return ids;
     }
 
     public Long getQuestionId() {
-        return this.getQuestionId();
+        return question != null ? question.getId() : null;
+    }
+
+    public void setSelectedChoiceIds(List<Long> choiceIds) {
+        List<AnswerChoice> choices = new ArrayList<>();
+        for (Long id : choiceIds) {
+            Choice choice = new Choice();
+            choice.setId(id);
+            AnswerChoice ac = new AnswerChoice();
+            ac.setAnswer(this);
+            ac.setChoice(choice);
+            choices.add(ac);
+        }
+        this.answerChoices = choices;
+    }
+
+    public void setQuestionId(Long questionId) {
+        Question question = new Question();
+        question.setId(questionId);
+        this.question = question;
     }
 }

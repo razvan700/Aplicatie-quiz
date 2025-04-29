@@ -2,17 +2,32 @@ package com.jetbrains.aplicatiequiz.dto;
 
 import com.jetbrains.aplicatiequiz.models.Quiz;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class QuizDTO {
+
     private Long id;
     private String title;
     private String shareableLink;
+    private List<QuestionDTO> questions;
+
+    public QuizDTO() {
+    }
+
+    public QuizDTO(Quiz quiz) {
+        this.id = quiz.getId();
+        this.title = quiz.getTitle();
+        this.shareableLink = quiz.getShareableLink();
+        if (quiz.getQuestions() != null) {
+            this.questions = quiz.getQuestions().stream()
+                    .map(QuestionDTO::new)
+                    .collect(Collectors.toList());
+        }
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public QuizDTO(){
-
     }
 
     public void setId(Long id) {
@@ -35,9 +50,11 @@ public class QuizDTO {
         this.shareableLink = shareableLink;
     }
 
-    public QuizDTO(Quiz quiz) {
-        this.id = quiz.getId();
-        this.title = quiz.getTitle();
-        this.shareableLink = quiz.getShareableLink();
+    public List<QuestionDTO> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuestionDTO> questions) {
+        this.questions = questions;
     }
 }
