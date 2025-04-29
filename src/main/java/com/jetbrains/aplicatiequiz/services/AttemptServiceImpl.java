@@ -4,7 +4,9 @@ import com.jetbrains.aplicatiequiz.models.*;
 import com.jetbrains.aplicatiequiz.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,40 +41,17 @@ public class AttemptServiceImpl implements AttemptService {
     @Override
     public Attempt submitAttempt(Attempt attempt, String username, Long quizId) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
         Quiz quiz = quizRepository.findById(quizId)
-                .orElseThrow(() -> new EntityNotFoundException("Quiz not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz not found"));
+
+        if (!quiz.getShareableLink().equals(attempt.getShareableLink())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Shareable link mismatch");
+        }
 
         attempt.setUser(user);
         attempt.setQuiz(quiz);
-        attempt.setTimestamp(LocalDateTime.now());
-        attempt.setAttemptDate(LocalDateTime.now());
-        attempt.setShareableLink(quiz.getShareableLink());
-
-        if (attempt.getAnswers() != null) {
-            for (Answer answer : attempt.getAnswers()) {
-                Question question = questionRepository.findById(answer.getQuestionId())
-                        .orElseThrow(() -> new EntityNotFoundException("Question not found"));
-
-                answer.setAttempt(attempt);
-                answer.setQuestion(question);
-
-                if (answer.getSelectedChoiceIds() != null) {
-                    List<AnswerChoice> answerChoices = new ArrayList<>();
-                    for (Long choiceId : answer.getSelectedChoiceIds()) {
-                        Choice choice = choiceRepository.findById(choiceId)
-                                .orElseThrow(() -> new EntityNotFoundException("Choice not found"));
-
-                        AnswerChoice answerChoice = new AnswerChoice();
-                        answerChoice.setAnswer(answer);
-                        answerChoice.setChoice(choice);
-                        answerChoices.add(answerChoice);
-                    }
-                    answer.setAnswerChoices(answerChoices);
-                }
-            }
-        }
-
         return attemptRepository.save(attempt);
     }
 
