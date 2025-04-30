@@ -10,6 +10,10 @@ public class ChoiceDTO {
     public ChoiceDTO() {
     }
 
+    public ChoiceDTO(String text) {
+        this.text = text;
+    }
+
     public ChoiceDTO(Choice choice) {
         this.id = choice.getId();
         this.text = choice.getText();
