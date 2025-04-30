@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jetbrains.aplicatiequiz.enums.Role;
 import com.jetbrains.aplicatiequiz.models.Attempt;
 import com.jetbrains.aplicatiequiz.models.User;
@@ -9,6 +10,8 @@ import java.util.List;
 public class UserDTO {
 
     private String password;
+
+    @JsonIgnore
     private Long id;
 
     private String username;
@@ -16,7 +19,7 @@ public class UserDTO {
     private Role Role;
 
 
-
+    public UserDTO() {}
 
     public Long getId() {
         return id;
