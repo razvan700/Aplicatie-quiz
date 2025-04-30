@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.dto;
 
+import com.jetbrains.aplicatiequiz.enums.QuestionType;
 import com.jetbrains.aplicatiequiz.models.Question;
 
 import java.util.List;
@@ -9,11 +10,14 @@ public class QuestionDTO {
 
     private Long id;
     private String text;
-    private String type;
+    private QuestionType type;
+
     private List<ChoiceDTO> choices;
 
     public QuestionDTO() {
     }
+
+
 
     public QuestionDTO(Question question) {
         this.id = question.getId();
@@ -24,6 +28,10 @@ public class QuestionDTO {
                     .map(ChoiceDTO::new)
                     .collect(Collectors.toList());
         }
+    }
+
+    public void setType(QuestionType type) {
+        this.type = type;
     }
 
     public Long getId() {
@@ -38,16 +46,12 @@ public class QuestionDTO {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getType() {
+    public QuestionType getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public List<ChoiceDTO> getChoices() {

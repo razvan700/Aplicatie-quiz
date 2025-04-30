@@ -1,6 +1,7 @@
 package com.jetbrains.aplicatiequiz.models;
 
 import com.jetbrains.aplicatiequiz.dto.QuestionDTO;
+import com.jetbrains.aplicatiequiz.enums.QuestionType;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,8 +17,9 @@ public class Question {
     @Column(nullable = false)
     private String text;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String type;
+    private QuestionType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id", nullable = false)
@@ -37,7 +39,6 @@ public class Question {
         this.type = dto.getType();
     }
 
-
     public Long getId() {
         return id;
     }
@@ -54,11 +55,11 @@ public class Question {
         this.text = text;
     }
 
-    public String getType() {
+    public QuestionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(QuestionType type) {
         this.type = type;
     }
 

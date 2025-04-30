@@ -11,8 +11,7 @@ public class AnswerDTO {
     private String textResponse;
     private List<Long> selectedChoiceIds;
 
-    public AnswerDTO() {
-    }
+    public AnswerDTO() {}
 
     public AnswerDTO(Answer answer) {
         if (answer.getQuestion() != null) {
@@ -20,7 +19,6 @@ public class AnswerDTO {
         }
 
         this.textResponse = answer.getTextResponse();
-
         this.selectedChoiceIds = new ArrayList<>();
         if (answer.getAnswerChoices() != null) {
             for (AnswerChoice ac : answer.getAnswerChoices()) {

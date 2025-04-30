@@ -1,5 +1,6 @@
 package com.jetbrains.aplicatiequiz.config;
 
+import com.jetbrains.aplicatiequiz.enums.QuestionType;
 import com.jetbrains.aplicatiequiz.enums.Role;
 import com.jetbrains.aplicatiequiz.models.*;
 import com.jetbrains.aplicatiequiz.repositories.*;
@@ -107,7 +108,7 @@ public class DatabaseSeeder {
 //        };
 //    }
 
-    private Question createQuestion(String text, String type, Quiz quiz, QuestionRepository questionRepository) {
+    private Question createQuestion(String text, QuestionType type, Quiz quiz, QuestionRepository questionRepository) {
         Question question = new Question();
         question.setText(text);
         question.setType(type);

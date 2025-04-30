@@ -4,6 +4,8 @@ import com.jetbrains.aplicatiequiz.models.*;
 import com.jetbrains.aplicatiequiz.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +14,8 @@ import java.util.List;
 @Service
 @Transactional
 public class AttemptServiceImpl implements AttemptService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AttemptServiceImpl.class);
 
     private final AttemptRepository attemptRepository;
     private final UserRepository userRepository;
@@ -43,14 +47,29 @@ public class AttemptServiceImpl implements AttemptService {
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz not found"));
 
-        if (!quiz.getShareableLink().equals(attempt.getShareableLink())) {
+        String incomingLink = attempt.getShareableLink();
+        String expectedLink = quiz.getShareableLink();
+
+        if (incomingLink == null || !incomingLink.trim().equals(expectedLink.trim())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Shareable link mismatch");
         }
 
         attempt.setUser(user);
         attempt.setQuiz(quiz);
+
+        if (attempt.getAnswers() != null) {
+            for (Answer answer : attempt.getAnswers()) {
+                answer.setAttempt(attempt);
+            }
+        }
+
         return attemptRepository.save(attempt);
     }
+
+
+
+
+
 
     @Override
     public List<Attempt> getAttemptsByUserId(Long userId) {
